@@ -12,7 +12,7 @@ include_directories(tools/OpenCL)
 link_directories(tools/OpenCL/lib/x86)
 link_libraries(OpenCL)
 
-configure_file(src/modules/sha256.cl COPYONLY)
+#configure_file(src/modules/sha256.cl COPYONLY)
 
 
 add_executable( TestChain src/main.cpp

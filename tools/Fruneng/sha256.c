@@ -1,4 +1,5 @@
 #include "sha256.h"
+#include "string.h"
 
 static cl_platform_id platform_id = NULL;
 static cl_device_id device_id = NULL;  
@@ -46,7 +47,7 @@ void sha256_init(size_t user_kpc)
 	create_clobj();
 }
 
-void sha256_crypt(char* input, char* output)
+void sha256_crypt(const char* input, char* output)
 {
 	int i;
 	string_len = strlen(input);
