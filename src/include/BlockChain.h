@@ -5,26 +5,21 @@
 #ifndef TESTCHAIN_BLOCKCHAIN_H
 #define TESTCHAIN_BLOCKCHAIN_H
 
-#include "Block.h"
-
 #include <cstdint>
 #include <vector>
-#include <string>
+#include "Block.h"
 
 using namespace std;
-class BlockChain {
+
+class Blockchain {
 public:
-    BlockChain();
+    Blockchain();
 
-    void AddBlock(Block bNew, string hash);
-
-    std::string header;
+    void AddBlock(Block bNew);
 
 private:
-
     uint32_t _nDifficulty;
     vector<Block> _vChain;
-
 
     Block _GetLastBlock() const;
 };

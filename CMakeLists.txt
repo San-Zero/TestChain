@@ -17,7 +17,8 @@ configure_file(src/modules/sha256.cl COPYONLY)
 
 add_executable( TestChain src/main.cpp
 #                tools/zedwood/sha256.h
-#        tools/zedwood/sha256.cpp
+#                tools/zedwood/sha256.cpp
+                tools/Fruneng/sha256.c
 #                include/Block.h
                 src/modules/Block.cpp
 #                include/BlockChain.h

@@ -4,42 +4,42 @@
 #include "Block.h"
 #include "sha256.h"
 
-#include <sstream>
-
-Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn) {
-    _nNonce = -1;
+Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn)
+{
+    _nNonce = 0;
     _tTime = time(nullptr);
+
+    sHash = _CalculateHash();
 }
 
-string Block::GetHash() {
-    return _sHash;
-}
-
-void Block::MineBlock(uint32_t nDifficulty, string hash) {
-    char *cstr = new char[nDifficulty + 1]; //  fix error C2131
-    for (uint32_t i = 0; i < nDifficulty; ++i) {
+void Block::MineBlock(uint32_t nDifficulty)
+{
+    char cstr[nDifficulty + 1];
+    for (uint32_t i = 0; i < nDifficulty; ++i)
+    {
         cstr[i] = '0';
     }
     cstr[nDifficulty] = '\0';
 
     string str(cstr);
 
-    do {
+    do
+    {
         _nNonce++;
-        _sHash = hash;
-    } while (_sHash.substr(0, nDifficulty) != str);
+        sHash = _CalculateHash();
+    }
+    while (sHash.substr(0, nDifficulty) != str);
 
-    cout << "Block mined: " << _sHash << endl;
+    cout << "Block mined: " << sHash << endl;
 }
 
-//inline string Block::_CalculateHash() const {
-//    std::stringstream ss;
-//    ss << _nIndex << _tTime << _sData << _nNonce << sPrevHash;
-//
-//    return sha256(ss.str());
-//}
+inline string Block::_CalculateHash() const
+{
+    stringstream ss;
+    ss << _nIndex << sPrevHash << _tTime << _sData << _nNonce;
 
-
+    return sha256(ss.str());
+}
 
 time_t Block::time(void *pVoid) {
     return 0;
