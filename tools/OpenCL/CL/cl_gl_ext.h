@@ -48,7 +48,7 @@ extern "C" {
  * ... define new APIs, if any
  *
  *  If you need GLtypes here, mirror them with a cl_GLtype, rather than including a GL header
- *  This allows us to avoid having to decide whether to include GL headers or GLES here.
+ *  This allows us to avoid having to decide whether to include GL include or GLES here.
  */
 
 /* 

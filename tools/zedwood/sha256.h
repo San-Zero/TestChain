@@ -3,7 +3,7 @@
 //
 
 #ifndef TESTCHAIN_SHA256_H
-#define TESTCHAIN_SHA256_H
+#define TESTCHAIN_CRYPTOCL_H
 #include <string>
 
 class SHA256

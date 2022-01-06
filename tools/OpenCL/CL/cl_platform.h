@@ -459,7 +459,7 @@ typedef unsigned int cl_GLenum;
     #if defined( __MINGW64__ )
         #include <intrin.h>
     #else
-        #include <immintrin.h> 
+        #include <immintrin.h>
     #endif
     #if defined( __GNUC__ ) && !defined( __ICC )
         typedef cl_float    __cl_float8     __attribute__((vector_size(32)));

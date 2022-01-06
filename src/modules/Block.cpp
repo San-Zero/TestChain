@@ -1,8 +1,8 @@
 //
 // Created by let02 on 2021/12/9.
 //
-#include "../../include/Block.h"
-#include "../../tools/zedwood/sha256.h"
+#include "Block.h"
+#include "sha256.h"
 
 #include <sstream>
 
@@ -15,8 +15,8 @@ string Block::GetHash() {
     return _sHash;
 }
 
-void Block::MineBlock(uint32_t nDifficulty) {
-    char cstr[nDifficulty + 1];
+void Block::MineBlock(uint32_t nDifficulty, string hash) {
+    char *cstr = new char[nDifficulty + 1]; //  fix error C2131
     for (uint32_t i = 0; i < nDifficulty; ++i) {
         cstr[i] = '0';
     }
@@ -26,18 +26,20 @@ void Block::MineBlock(uint32_t nDifficulty) {
 
     do {
         _nNonce++;
-        _sHash = _CalculateHash();
+        _sHash = hash;
     } while (_sHash.substr(0, nDifficulty) != str);
 
     cout << "Block mined: " << _sHash << endl;
 }
 
-inline string Block::_CalculateHash() const {
-    std::stringstream ss;
-    ss << _nIndex << _tTime << _sData << _nNonce << sPrevHash;
+//inline string Block::_CalculateHash() const {
+//    std::stringstream ss;
+//    ss << _nIndex << _tTime << _sData << _nNonce << sPrevHash;
+//
+//    return sha256(ss.str());
+//}
 
-    return sha256(ss.str());
-}
+
 
 time_t Block::time(void *pVoid) {
     return 0;
