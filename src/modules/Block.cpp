@@ -4,8 +4,7 @@
 #include "Block.h"
 #include "sha256.h"
 
-Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn)
-{
+Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn) {
     _nNonce = 0;
     _tTime = time(nullptr);
 
@@ -14,35 +13,30 @@ Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sDa
     sha256_init(2048);
 }
 
-void Block::MineBlock(uint32_t nDifficulty)
-{
+void Block::MineBlock(uint32_t nDifficulty) {
     char *cstr = new char[nDifficulty + 1];
-    for (uint32_t i = 0; i < nDifficulty; ++i)
-    {
+    for (uint32_t i = 0; i < nDifficulty; ++i) {
         cstr[i] = '0';
     }
     cstr[nDifficulty] = '\0';
 
     string str(cstr);
 
-    do
-    {
+    do {
         _nNonce++;
         sHash = _CalculateHash();
-    }
-    while (sHash.substr(0, nDifficulty) != str);
+    } while (sHash.substr(0, nDifficulty) != str);
 
     cout << "Block mined: " << sHash << endl;
-    delete [] cstr;
+    delete[] cstr;
 }
 
-string Block::_CalculateHash() const
-{
+string Block::_CalculateHash() const {
     stringstream ss;
     ss.str("");
     ss << _nIndex << sPrevHash << _tTime << _sData << _nNonce;
-    const char *input = ss.str().c_str();
-    char result[65];
+    char *input = const_cast<char *>(ss.str().c_str());
+    char result[200];
     sha256_crypt(input, result);
 
     ss.clear();
