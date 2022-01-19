@@ -7,7 +7,7 @@
 Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn)
 {
     _nNonce = 0;
-    _tTime = time(nullptr);
+    time(&_tTime);
 
     sHash = _CalculateHash();
 
@@ -48,8 +48,3 @@ string Block::_CalculateHash() const
     ss.clear();
     return string(result);
 }
-
-time_t Block::time(void *pVoid) {
-    return 0;
-}
-
