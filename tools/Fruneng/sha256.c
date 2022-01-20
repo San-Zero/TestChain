@@ -49,22 +49,27 @@ void sha256_init(size_t user_kpc)
 
 void sha256_crypt(char* input, char* output)
 {
-	string_len = strlen(input);
-
-	global_work_size = 1;
-	datai[0] = SHA256_PLAINTEXT_LENGTH;
-	datai[1] = global_work_size;
-	datai[2] = string_len;
-	memcpy(saved_plain, input, string_len+1);
-
-	crypt_all();
-
     int i;
-	for(i=0; i<SHA256_RESULT_SIZE; i++)
+    string_len = strlen(input);
+    global_work_size = 1;
+    datai[0] = SHA256_PLAINTEXT_LENGTH;
+    datai[1] = global_work_size;
+    datai[2] = string_len;
+
+    //saved_plain = malloc(string_len);
+    //memcpy(saved_plain, input, string_len+1);
+
+    crypt_all();
+
+    //partial_hashes = malloc(string_len);
+    for(i=0; i<SHA256_RESULT_SIZE; i++)
 	{
 		sprintf(output+i*8,"%08x", partial_hashes[i]);
 
 	}
+
+    //free(partial_hashes);
+    //free(saved_plain);
 }
 
 void crypt_all()

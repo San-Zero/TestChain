@@ -1,0 +1,3 @@
+/home/let02/CLionProjects/TestChain/build/CMakeFiles/TestChain.dir
+/home/let02/CLionProjects/TestChain/build/CMakeFiles/edit_cache.dir
+/home/let02/CLionProjects/TestChain/build/CMakeFiles/rebuild_cache.dir

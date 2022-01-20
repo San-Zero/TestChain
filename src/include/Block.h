@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <iostream>
 #include <sstream>
+#include <ctime>
 
 using namespace std;
 
@@ -27,8 +28,6 @@ private:
     time_t _tTime;
 
     string _CalculateHash() const;
-
-    time_t time(void *pVoid);
 };
 #endif //TESTCHAIN_BLOCK_H
 
