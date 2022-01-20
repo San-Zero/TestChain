@@ -31,7 +31,7 @@ extern "C" {
 #endif
 
 void sha256_init(size_t);
-void sha256_crypt(const char*, char*);
+void sha256_crypt(char*, char*);
 
 #ifdef __cplusplus
 }

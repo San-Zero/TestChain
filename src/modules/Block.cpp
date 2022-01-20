@@ -41,9 +41,12 @@ string Block::_CalculateHash() const
     stringstream ss;
     ss.str("");
     ss << _nIndex << sPrevHash << _tTime << _sData << _nNonce;
-    const char *input = ss.str().c_str();
-    char result[100];
-    sha256_crypt(input, result);
+    std::string input(ss.str());
+    const char *crypto_input = input.c_str();
+
+    char* char_input = const_cast<char*>(crypto_input);
+    char result[65] = "";
+    sha256_crypt(char_input, result);
 
     ss.clear();
     return string(result);

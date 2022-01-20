@@ -47,27 +47,29 @@ void sha256_init(size_t user_kpc)
 	create_clobj();
 }
 
-void sha256_crypt(const char* input, char* output)
+void sha256_crypt(char* input, char* output)
 {
-	int i;
-	string_len = strlen(input);
-	global_work_size = 1;
-	datai[0] = SHA256_PLAINTEXT_LENGTH;
-	datai[1] = global_work_size;
-	datai[2] = string_len;
+    int i;
+    string_len = strlen(input);
+    global_work_size = 1;
+    datai[0] = SHA256_PLAINTEXT_LENGTH;
+    datai[1] = global_work_size;
+    datai[2] = string_len;
 
-    saved_plain = malloc(string_len);
-	memcpy(saved_plain, input, string_len+1);
+    //saved_plain = malloc(string_len);
+    //memcpy(saved_plain, input, string_len+1);
 
-	crypt_all();
+    crypt_all();
 
-	for(i=0; i<SHA256_RESULT_SIZE; i++)
+    //partial_hashes = malloc(string_len);
+    for(i=0; i<SHA256_RESULT_SIZE; i++)
 	{
 		sprintf(output+i*8,"%08x", partial_hashes[i]);
 
 	}
 
-    free(saved_plain);
+    //free(partial_hashes);
+    //free(saved_plain);
 }
 
 void crypt_all()
