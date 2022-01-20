@@ -42,7 +42,7 @@ string Block::_CalculateHash() const
     ss.str("");
     ss << _nIndex << sPrevHash << _tTime << _sData << _nNonce;
     const char *input = ss.str().c_str();
-    char result[65];
+    char result[100];
     sha256_crypt(input, result);
 
     ss.clear();

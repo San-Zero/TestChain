@@ -55,6 +55,8 @@ void sha256_crypt(const char* input, char* output)
 	datai[0] = SHA256_PLAINTEXT_LENGTH;
 	datai[1] = global_work_size;
 	datai[2] = string_len;
+
+    saved_plain = malloc(string_len);
 	memcpy(saved_plain, input, string_len+1);
 
 	crypt_all();
@@ -64,6 +66,8 @@ void sha256_crypt(const char* input, char* output)
 		sprintf(output+i*8,"%08x", partial_hashes[i]);
 
 	}
+
+    free(saved_plain);
 }
 
 void crypt_all()
