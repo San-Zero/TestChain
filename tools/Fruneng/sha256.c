@@ -57,7 +57,7 @@ void sha256_crypt(char* input, char* output)
     datai[2] = string_len;
 
     //saved_plain = malloc(string_len);
-    //memcpy(saved_plain, input, string_len+1);
+    memcpy(saved_plain, input, string_len+1);
 
     crypt_all();
 
