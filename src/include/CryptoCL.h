@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <iostream>
 
-#define CL_HPP_TARGET_OPENCL_VERSION 210
+#define CL_HPP_TARGET_OPENCL_VERSION 200
 #ifdef __APPLE__
 #include <OpenCL/opencl.hpp>
 #else
@@ -22,5 +22,7 @@ public:
     Crypto(uint32_t platform, uint32_t id);
 private:
     void load_source();
+
+    void getDevice();
 };
 #endif //TESTCHAIN_CRYPTOCL_H

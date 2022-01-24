@@ -1,12 +1,14 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.10)
 project(TestChain)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_VERBOSE_MAKEFILE ON)  #print gcc/g++ detail log
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS   "${CMAKE_CXX_FLAGS}-g -lOpenCL ")
+#set(CMAKE_VERBOSE_MAKEFILE ON)  #print gcc/g++ detail log
 
 include_directories(src/include)
-include_directories(tools/Fruneng)
+include_directories(tools)
 
 #import OPENCL
 find_package(OpenCL REQUIRED)

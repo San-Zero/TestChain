@@ -1,14 +1,9 @@
 //
 // Created by let02 on 2021/12/9.
 //
-#define PROGRAM_FILE "sha256.cl"
 
 #include "BlockChain.h"
-#include "CryptoCL.h"
-
 #include <iostream>
-
-#include <CL/cl.hpp>
 
 int main()
 {

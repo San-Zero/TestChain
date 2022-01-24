@@ -2,16 +2,19 @@
 // Created by let02 on 2021/12/9.
 //
 #include "Block.h"
-#include "sha256.h"
+#include "Fruneng/sha256.h"
 
 Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sData(sDataIn)
 {
     _nNonce = 0;
     time(&_tTime);
 
+    //TODO:
+    sha256_init(2048);
+
+
     sHash = _CalculateHash();
 
-    sha256_init(2048);
 }
 
 void Block::MineBlock(uint32_t nDifficulty)
@@ -42,9 +45,9 @@ string Block::_CalculateHash() const
     ss.str("");
     ss << _nIndex << sPrevHash << _tTime << _sData << _nNonce;
     std::string input(ss.str());
-    const char *crypto_input = input.c_str();
+    //const char *crypto_input = input.c_str();
 
-    char* char_input = const_cast<char*>(crypto_input);
+    char* char_input = const_cast<char*>(input.c_str());
     char result[65] = "";
     sha256_crypt(char_input, result);
 

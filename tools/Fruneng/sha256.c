@@ -24,7 +24,7 @@ static char *saved_plain;
 static unsigned int datai[3];
 static int have_full_hashes;
 
-static size_t kpc = 4;
+static size_t kpc = 2048;
 
 static size_t global_work_size=1;
 static size_t local_work_size=1;
@@ -56,20 +56,15 @@ void sha256_crypt(char* input, char* output)
     datai[1] = global_work_size;
     datai[2] = string_len;
 
-    //saved_plain = malloc(string_len);
     memcpy(saved_plain, input, string_len+1);
 
     crypt_all();
 
-    //partial_hashes = malloc(string_len);
     for(i=0; i<SHA256_RESULT_SIZE; i++)
 	{
 		sprintf(output+i*8,"%08x", partial_hashes[i]);
 
 	}
-
-    //free(partial_hashes);
-    //free(saved_plain);
 }
 
 void crypt_all()
@@ -121,10 +116,23 @@ void create_clobj(){
 
 void createDevice()
 {
-	ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
-	ret = clGetDeviceIDs( platform_id, CL_DEVICE_TYPE_ALL, 1, &device_id, &ret_num_devices);
+    ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
+    if(ret < 0) {
+        perror("Couldn't identify a platform");
+        exit(1);
+    }
 
-	context = clCreateContext( NULL, 1, &device_id, NULL, NULL, &ret);
+    ret = clGetDeviceIDs( platform_id, CL_DEVICE_TYPE_ALL, 1, &device_id, &ret_num_devices);
+    if(ret < 0) {
+        perror("Couldn't access any device");
+        exit(1);
+    }
+
+    context = clCreateContext( NULL, 1, &device_id, NULL, NULL, &ret);
+    if(ret < 0) {
+        perror("Couldn't create a context");
+        exit(1);
+    }
 }
 
 void createkernel()

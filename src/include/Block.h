@@ -1,7 +1,6 @@
 //
 // Created by let02 on 2021/12/9.
 //
-//TODO 將BlockChain和Block合併，引用CryptoCL做運算
 #ifndef TESTCHAIN_BLOCK_H
 #define TESTCHAIN_BLOCK_H
 
@@ -29,5 +28,6 @@ private:
 
     string _CalculateHash() const;
 };
+
 #endif //TESTCHAIN_BLOCK_H
 

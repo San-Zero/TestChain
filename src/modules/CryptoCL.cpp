@@ -2,11 +2,20 @@
 // Created by let02 on 2022/1/6.
 //
 #include "CryptoCL.h"
-
+static uint platform_id = 0;
+static uint device_id = 0;
 static char *source_str;
 static size_t source_size;
 
 Crypto::Crypto(const uint32_t platform_id, const uint32_t device_id) {
+    getDevice();
+
+
+
+    load_source();
+}
+
+void Crypto::getDevice(){
     std::vector<cl::Platform> platforms;
     if (platforms.empty()) {
         std::cerr << "No platforms!" << std::endl;
@@ -23,13 +32,7 @@ Crypto::Crypto(const uint32_t platform_id, const uint32_t device_id) {
     platform.getDevices(CL_DEVICE_TYPE_ALL, &Devices);
     cl::Device device = Devices[device_id];
     std::cout << "Device : " << device.getInfo<CL_DEVICE_NAME>() << std::endl;
-
-    cl::Context context({device});
-
-    load_source();
 }
-
-
 
 void Crypto::load_source() {
     FILE *fp;
