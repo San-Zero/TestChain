@@ -15,6 +15,9 @@ Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sDa
 
 void Block::MineBlock(uint32_t nDifficulty)
 {
+    clock_t start, stop;
+    start = clock();
+
     char *cstr = new char[nDifficulty + 1];
     for (uint32_t i = 0; i < nDifficulty; ++i)
     {
@@ -31,9 +34,9 @@ void Block::MineBlock(uint32_t nDifficulty)
     }
     while (sHash.substr(0, nDifficulty) != str);
 
-    cout << "Block mined: " << sHash << endl;
+    cout << "Block mined: " << sHash << "\n";
+    cout << "Time: " << double (stop - start)/CLOCKS_PER_SEC << "s\n";
     cout << "Nonce: " << _nNonce << endl;
-
     delete [] cstr;
     clRelease();
 }
