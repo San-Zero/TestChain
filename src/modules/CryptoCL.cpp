@@ -2,8 +2,8 @@
 // Created by let02 on 2022/1/6.
 //
 #include "CryptoCL.h"
-static uint platform_id = 0;
-static uint device_id = 0;
+static u_int platform_id = 0;
+static u_int device_id = 0;
 static char *source_str;
 static size_t source_size;
 

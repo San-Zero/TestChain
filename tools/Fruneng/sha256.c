@@ -63,7 +63,6 @@ void sha256_crypt(char* input, char* output)
     for(i=0; i<SHA256_RESULT_SIZE; i++)
 	{
 		sprintf(output+i*8,"%08x", partial_hashes[i]);
-
 	}
 }
 
@@ -141,4 +140,17 @@ void createkernel()
 	ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
 	kernel = clCreateKernel(program, "sha256_crypt_kernel", &ret);
 	command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
+}
+
+void clRelease(){
+    ret = clFlush(command_queue);
+    ret = clFinish(command_queue);
+    ret = clReleaseKernel(kernel);
+    ret = clReleaseProgram(program);
+    ret = clReleaseMemObject(pinned_saved_keys);
+    ret = clReleaseMemObject(pinned_partial_hashes);
+    ret = clReleaseCommandQueue(command_queue);
+    ret = clReleaseContext(context);
+
+    free(res_hashes);
 }

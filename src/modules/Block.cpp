@@ -8,13 +8,9 @@ Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sDa
 {
     _nNonce = 0;
     time(&_tTime);
-
-    //TODO:
+    //TODO: 每次呼叫BLock時，都會重新做一次sha256_init()， 要新增釋放opencl配置的記憶體
     sha256_init(2048);
-
-
     sHash = _CalculateHash();
-
 }
 
 void Block::MineBlock(uint32_t nDifficulty)
@@ -36,7 +32,10 @@ void Block::MineBlock(uint32_t nDifficulty)
     while (sHash.substr(0, nDifficulty) != str);
 
     cout << "Block mined: " << sHash << endl;
+    cout << "Nonce: " << _nNonce << endl;
+
     delete [] cstr;
+    clRelease();
 }
 
 string Block::_CalculateHash() const
@@ -52,5 +51,6 @@ string Block::_CalculateHash() const
     sha256_crypt(char_input, result);
 
     ss.clear();
+    //cout << result << '\n';
     return string(result);
 }

@@ -32,6 +32,7 @@ extern "C" {
 
 void sha256_init(size_t);
 void sha256_crypt(char*, char*);
+void clRelease();
 
 #ifdef __cplusplus
 }
