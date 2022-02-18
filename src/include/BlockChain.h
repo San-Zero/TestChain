@@ -2,6 +2,7 @@
 // Created by let02 on 2021/12/9.
 //
 
+//TODO: 將BlockChain.h 和 Block.h 整合為一個 header file
 #ifndef TESTCHAIN_BLOCKCHAIN_H
 #define TESTCHAIN_BLOCKCHAIN_H
 

@@ -94,25 +94,6 @@ void load_source()
 	fclose( fp );
 }
 
-void create_clobj(){
-	pinned_saved_keys = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, (SHA256_PLAINTEXT_LENGTH)*kpc, NULL, &ret);
-	saved_plain = (char*)clEnqueueMapBuffer(command_queue, pinned_saved_keys, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, (SHA256_PLAINTEXT_LENGTH)*kpc, 0, NULL, NULL, &ret);
-	memset(saved_plain, 0, SHA256_PLAINTEXT_LENGTH * kpc);
-	res_hashes = (cl_uint *)malloc(sizeof(cl_uint) * SHA256_RESULT_SIZE);
-	memset(res_hashes, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE);
-	pinned_partial_hashes = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, sizeof(cl_uint) * SHA256_RESULT_SIZE, NULL, &ret);
-	partial_hashes = (cl_uint *) clEnqueueMapBuffer(command_queue, pinned_partial_hashes, CL_TRUE, CL_MAP_READ, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE, 0, NULL, NULL, &ret);
-	memset(partial_hashes, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE);
-
-	buffer_keys = clCreateBuffer(context, CL_MEM_READ_ONLY, (SHA256_PLAINTEXT_LENGTH) * kpc, NULL, &ret);
-	buffer_out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint) * SHA256_RESULT_SIZE, NULL, &ret);
-	data_info = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(unsigned int) * 3, NULL, &ret);
-
-	clSetKernelArg(kernel, 0, sizeof(data_info), (void *) &data_info);
-	clSetKernelArg(kernel, 1, sizeof(buffer_keys), (void *) &buffer_keys);
-	clSetKernelArg(kernel, 2, sizeof(buffer_out), (void *) &buffer_out);
-}
-
 void createDevice()
 {
     ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
@@ -142,13 +123,39 @@ void createkernel()
 	command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 }
 
+void create_clobj(){
+    pinned_saved_keys = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, (SHA256_PLAINTEXT_LENGTH)*kpc, NULL, &ret);
+    saved_plain = (char*)clEnqueueMapBuffer(command_queue, pinned_saved_keys, CL_TRUE, CL_MAP_WRITE | CL_MAP_READ, 0, (SHA256_PLAINTEXT_LENGTH)*kpc, 0, NULL, NULL, &ret);
+    memset(saved_plain, 0, SHA256_PLAINTEXT_LENGTH * kpc);
+    res_hashes = (cl_uint *)malloc(sizeof(cl_uint) * SHA256_RESULT_SIZE);
+    memset(res_hashes, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE);
+    pinned_partial_hashes = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, sizeof(cl_uint) * SHA256_RESULT_SIZE, NULL, &ret);
+    partial_hashes = (cl_uint *) clEnqueueMapBuffer(command_queue, pinned_partial_hashes, CL_TRUE, CL_MAP_READ, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE, 0, NULL, NULL, &ret);
+    memset(partial_hashes, 0, sizeof(cl_uint) * SHA256_RESULT_SIZE);
+
+    buffer_keys = clCreateBuffer(context, CL_MEM_READ_ONLY, (SHA256_PLAINTEXT_LENGTH) * kpc, NULL, &ret);
+    buffer_out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(cl_uint) * SHA256_RESULT_SIZE, NULL, &ret);
+    data_info = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(unsigned int) * 3, NULL, &ret);
+
+    clSetKernelArg(kernel, 0, sizeof(data_info), (void *) &data_info);
+    clSetKernelArg(kernel, 1, sizeof(buffer_keys), (void *) &buffer_keys);
+    clSetKernelArg(kernel, 2, sizeof(buffer_out), (void *) &buffer_out);
+}
+
 void clRelease(){
+    free(source_str);
+
     ret = clFlush(command_queue);
     ret = clFinish(command_queue);
     ret = clReleaseKernel(kernel);
     ret = clReleaseProgram(program);
+
     ret = clReleaseMemObject(pinned_saved_keys);
     ret = clReleaseMemObject(pinned_partial_hashes);
+    ret = clReleaseMemObject(buffer_keys);
+    ret = clReleaseMemObject(buffer_out);
+    ret = clReleaseMemObject(data_info);
+
     ret = clReleaseCommandQueue(command_queue);
     ret = clReleaseContext(context);
 

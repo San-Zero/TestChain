@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(TestChain)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 #set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_CXX_FLAGS   "${CMAKE_CXX_FLAGS}-g -lOpenCL ")
@@ -24,5 +24,5 @@ add_executable( TestChain src/main.cpp
                 src/modules/Block.cpp
                 src/modules/BlockChain.cpp
 #                src/modules/CryptoCL.cpp
-                )
+        src/include/Transaction.h src/modules/Transaction.cpp)
 target_link_libraries (TestChain OpenCL)

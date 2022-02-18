@@ -8,16 +8,13 @@ Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sDa
 {
     _nNonce = 0;
     time(&_tTime);
-    //TODO: 每次呼叫BLock時，都會重新做一次sha256_init()， 要新增釋放opencl配置的記憶體
     sha256_init(2048);
-    sHash = _CalculateHash();
+    //sHash = _CalculateHash();
+    sHash = "0000000000000000000000000000000000000000000000000000000000000000";
 }
 
 void Block::MineBlock(uint32_t nDifficulty)
 {
-    clock_t start, stop;
-    start = clock();
-
     char *cstr = new char[nDifficulty + 1];
     for (uint32_t i = 0; i < nDifficulty; ++i)
     {
@@ -27,6 +24,9 @@ void Block::MineBlock(uint32_t nDifficulty)
 
     string str(cstr);
 
+    clock_t start, end;
+    start = clock();
+
     do
     {
         _nNonce++;
@@ -34,9 +34,16 @@ void Block::MineBlock(uint32_t nDifficulty)
     }
     while (sHash.substr(0, nDifficulty) != str);
 
-    cout << "Block mined: " << sHash << "\n";
-    cout << "Time: " << double (stop - start)/CLOCKS_PER_SEC << "s\n";
+    end = clock();
+
+    cout << "Block "<< _nIndex << " mined: " << sHash << endl;
+    cout << "Timestamp: " << _tTime << endl;
     cout << "Nonce: " << _nNonce << endl;
+    cout << "Prev Hash: " << sPrevHash << endl;
+    cout << "Computing Time: " << double (end - start) / CLOCKS_PER_SEC << " seconds\n";
+    cout << "Speed: " << (uint32_t)_nNonce / (double(end - start) / CLOCKS_PER_SEC )<< "h/s\n";
+    cout << "==================================================\n"; // there are 50 of '='
+
     delete [] cstr;
     clRelease();
 }
