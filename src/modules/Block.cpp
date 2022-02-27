@@ -13,6 +13,16 @@ Block::Block(uint32_t nIndexIn, const string &sDataIn) : _nIndex(nIndexIn), _sDa
     sHash = "0000000000000000000000000000000000000000000000000000000000000000";
 }
 
+//Block::Block(uint32_t nIndexIn, const Transaction &Tx) : _nIndex(nIndexIn), transaction(Tx)
+//{
+//    _nNonce = 0;
+//    time(&_tTime);
+//    sha256_init(2048);
+//    //sHash = _CalculateHash();
+//    sHash = "0000000000000000000000000000000000000000000000000000000000000000";
+//    transaction = Tx;
+//}
+
 void Block::MineBlock(uint32_t nDifficulty)
 {
     char *cstr = new char[nDifficulty + 1];
@@ -42,6 +52,7 @@ void Block::MineBlock(uint32_t nDifficulty)
     cout << "Prev Hash: " << sPrevHash << endl;
     cout << "Computing Time: " << double (end - start) / CLOCKS_PER_SEC << " seconds\n";
     cout << "Speed: " << (uint32_t)_nNonce / (double(end - start) / CLOCKS_PER_SEC )<< "h/s\n";
+    cout << "Data: " << _sData << endl;
     cout << "==================================================\n"; // there are 50 of '='
 
     delete [] cstr;

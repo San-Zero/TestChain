@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <vector>
 #include "Block.h"
+#include "Transaction.h"
 
 using namespace std;
 

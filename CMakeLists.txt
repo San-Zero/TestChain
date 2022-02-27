@@ -24,5 +24,5 @@ add_executable( TestChain src/main.cpp
                 src/modules/Block.cpp
                 src/modules/BlockChain.cpp
 #                src/modules/CryptoCL.cpp
-        src/include/Transaction.h src/modules/Transaction.cpp)
+                src/modules/Transaction.cpp)
 target_link_libraries (TestChain OpenCL)

@@ -8,6 +8,9 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <vector>
+
+#include "Transaction.h"
 
 using namespace std;
 
@@ -18,6 +21,8 @@ public:
 
     Block(uint32_t nIndexIn, const string &sDataIn);
 
+    Block(uint32_t nIndexIn, const Transaction &Tx);
+
     void MineBlock(uint32_t nDifficulty);
 
 private:
@@ -25,6 +30,7 @@ private:
     uint32_t _nNonce;
     string _sData;
     time_t _tTime;
+    //Transaction transaction;
 
     string _CalculateHash() const;
 };
