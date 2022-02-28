@@ -14,9 +14,10 @@ Transaction::Transaction(const std::string &sender, const std::string &receiver,
 }
 
 std::string Transaction::getTransaction() {
+    sequence++;
     std::stringstream ss;
     ss.str("");
-    ss << sender_ << receiver_ << amount_ << fee_ << message_;
+    ss << sender_ << receiver_ << amount_ << fee_ << message_ << sequence;
 
-    return ss.str();
+    return sha256(sha256(ss.str()));
 }

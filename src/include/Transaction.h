@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <sstream>
 
+#include "zedwood/sha256.h"
 
 class Transaction {
 public:
@@ -21,6 +22,7 @@ private:
     double amount_;
     double fee_;
     std::string message_;
+    int sequence = 0;
 };
 
 #endif //TESTCHAIN_TRANSACTION_H
