@@ -1,0 +1,3 @@
+"D:\Program Files\JetBrains\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\TestChain.dir/objects.a
+C:\MinGW\bin\ar.exe cr CMakeFiles\TestChain.dir/objects.a @CMakeFiles\TestChain.dir\objects1.rsp
+C:\MinGW\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\TestChain.dir/objects.a -Wl,--no-whole-archive -o TestChain.exe -Wl,--out-implib,libTestChain.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\TestChain.dir\linklibs.rsp

@@ -1,0 +1,1 @@
+  -LC:/Users/let02/CLionProjects/Practice/TestChain/tools/OpenCL/lib/x86  -lOpenCL -lOpenCL -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
